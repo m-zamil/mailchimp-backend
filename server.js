@@ -16,13 +16,9 @@ app.use(bodyParser.json());
 
 // Mailchimp credentials
 
-// const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
-// const LIST_ID = process.env.LIST_ID;
-// const SERVER_PREFIX = process.env.SERVER_PREFIX;
-
-const MAILCHIMP_API_KEY = '4146d906bea7491a0f002ab2a84be3fd-us19';
-const LIST_ID = '756d77bfca';
-const SERVER_PREFIX = 'us19';
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
+const LIST_ID = process.env.LIST_ID;
+const SERVER_PREFIX = process.env.SERVER_PREFIX;
 
 app.post('/subscribe', async (req, res) => {
   const { firstName, email } = req.body;
