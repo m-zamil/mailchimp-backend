@@ -56,4 +56,37 @@ app.post('/subscribe', async (req, res) => {
     res.status(500).json({ message: 'Subscription failed', error: error.response?.data });
   }
 });
+
+// New `/add-to-mailchimp` endpoint for the sales page
+app.post('/add-to-mailchimp', async (req, res) => {
+  const { email, tag } = req.body;
+
+  if (!email || !tag) {
+    return res.status(400).json({ message: 'Email and tag are required' });
+  }
+
+  const url = `https://${SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${LIST_ID}/members`;
+
+  try {
+    const response = await axios.post(
+      url,
+      {
+        email_address: email,
+        status: 'subscribed',
+        tags: [tag],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${MAILCHIMP_API_KEY}`,
+        },
+      }
+    );
+
+    res.status(200).json({ message: 'Successfully tagged in Mailchimp!' });
+  } catch (error) {
+    console.error(error.response?.data);
+    res.status(500).json({ message: 'Failed to tag in Mailchimp', error: error.response?.data });
+  }
+});
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
