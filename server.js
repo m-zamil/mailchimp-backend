@@ -81,11 +81,16 @@ app.post('/add-to-mailchimp', async (req, res) => {
         },
       }
     );
-
+    const data = await response.json();
+    data.error.title == 'Member Exists';
+    if (response.ok) {
+      res.status(200).json({ message: 'Successfully tagged in Mailchimp!' });
+    } else if (data.error.title == 'Member Exists') {
+      res.status(200).json({ message: 'Already Exists!' });
+    }
     res.status(200).json({ message: 'Successfully tagged in Mailchimp!' });
   } catch (error) {
     console.error(error.response?.data);
-    res.status(500).json({ message: 'Failed to tag in Mailchimp', error: error.response?.data });
   }
 });
 
