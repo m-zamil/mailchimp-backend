@@ -90,6 +90,7 @@ app.post('/add-to-mailchimp', async (req, res) => {
     res.status(200).json({ message: 'Successfully tagged in Mailchimp!' });
   } catch (error) {
     console.error(error.response?.data);
+    res.status(200).json({ message: 'Subscription failed', error: error.response?.data });
   }
 });
 
