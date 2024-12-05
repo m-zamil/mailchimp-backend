@@ -82,7 +82,6 @@ app.post('/add-to-mailchimp', async (req, res) => {
       }
     );
     const data = await response.json();
-    data.error.title == 'Member Exists';
     if (response.ok) {
       res.status(200).json({ message: 'Successfully tagged in Mailchimp!' });
     } else if (data.error.title == 'Member Exists') {
